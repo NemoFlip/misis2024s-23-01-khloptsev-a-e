@@ -1,0 +1,2 @@
+add_executable(test_stackarr test_stackarr.cpp)
+target_link_libraries(test_stackarr stackarr)
