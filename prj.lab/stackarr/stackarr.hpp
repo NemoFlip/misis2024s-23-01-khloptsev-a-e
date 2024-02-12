@@ -4,20 +4,20 @@
 #include <cstddef>
 class StackArr {
 public:
-    StackArr();
-    StackArr(const StackArr& rhs);
+    [[nodiscard]] StackArr();
+    [[nodiscard]] StackArr(const StackArr& rhs);
     ~StackArr() {
       delete[] data_;
       data_ = nullptr;
     }
-    StackArr& operator=(const StackArr& rhs);
-    void Push(const Complex& rhs);
+    [[nodiscard]] StackArr& operator=(const StackArr& rhs);
+    void Push(const Complex& val);
     void Pop() noexcept;
     std::ptrdiff_t GetTopIndex() const noexcept {
       return top_index;
     }
-    [[nodiscard]] bool IsEmpty() const noexcept;
-    [[nodiscard]] const Complex& Top();
+    bool IsEmpty() const noexcept;
+    [[nodiscard]] const Complex& Top() const;
 private:
     std::ptrdiff_t capacity_ { 0 };
     std::ptrdiff_t top_index = -1; // индекс верхнего элемента в стэке

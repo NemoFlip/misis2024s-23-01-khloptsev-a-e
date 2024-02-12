@@ -26,10 +26,10 @@ StackArr& StackArr::operator=(const StackArr& rhs) {
   }
   top_index = rhs.top_index;
 }
-void StackArr::Push(const Complex& element) {
+void StackArr::Push(const Complex& val) {
   if (capacity_ > top_index) {
     top_index += 1;
-    data_[top_index] = element;
+    data_[top_index] = val;
   } else {
     Complex* temp_data = new Complex[capacity_];
     for (std::ptrdiff_t i = 0; i < capacity_; i += 1) {
@@ -41,7 +41,7 @@ void StackArr::Push(const Complex& element) {
     for (std::ptrdiff_t i = 0; i < capacity_ - 1; i += 1) {
       data_[i] = temp_data[i];
     }
-    data_[capacity_] = element;
+    data_[capacity_] = val;
     top_index += 1;
   }
 }
@@ -56,7 +56,7 @@ bool StackArr::IsEmpty() const noexcept {
   return (top_index == -1);
 }
 
-const Complex& StackArr::Top() {
+const Complex& StackArr::Top() const {
   if (top_index == - 1) {
     throw std::out_of_range("Trying to get top element from empty Stack");
   }
