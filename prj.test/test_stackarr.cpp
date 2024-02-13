@@ -39,14 +39,14 @@ TEST_CASE("stackarr test") {
   eq1.Push(third_complex);
   eq2 = eq1;
   CHECK_EQ(eq2.Top(), third_complex);
-//  eq1.Pop();
-//  eq2.Pop();
-//  CHECK_EQ(eq1.Top(), eq2.Top());
-//  eq1.Pop();
-//  eq2.Pop();
-//  CHECK_EQ(eq1.Top(), eq2.Top());
-//  eq1.Pop();
-//  eq2.Pop();
-//  CHECK(eq1.IsEmpty());
-//  CHECK(eq2.IsEmpty());
+  eq1.Pop();
+  eq2.Pop();
+  CHECK_EQ(eq1.Top(), eq2.Top());
+  eq1.Pop();
+  eq2.Pop();
+  CHECK_EQ(eq1.Top(), eq2.Top());
+  eq1.Pop();
+  eq2.Pop();
+  CHECK(eq1.IsEmpty());
+  CHECK(eq2.IsEmpty());
 }
