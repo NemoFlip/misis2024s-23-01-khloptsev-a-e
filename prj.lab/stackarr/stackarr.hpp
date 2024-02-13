@@ -4,7 +4,7 @@
 #include <cstddef>
 class StackArr {
 public:
-    [[nodiscard]] StackArr();
+    [[nodiscard]] StackArr() = default;
     [[nodiscard]] StackArr(const StackArr& rhs);
     ~StackArr() {
       delete[] data_;

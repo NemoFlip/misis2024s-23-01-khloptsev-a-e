@@ -1,12 +1,9 @@
 #include <stackarr/stackarr.hpp>
 #include <stdexcept>
-StackArr::StackArr() {
-  data_ = new Complex[1];
-  capacity_ = 1;
-}
+
 StackArr::StackArr(const StackArr& rhs): capacity_ {rhs.capacity_}, top_index { rhs.top_index } {
-  data_ = new Complex[capacity_];
-  for (std::ptrdiff_t i = 0; i < rhs.top_index; i += 1) {
+  data_ = new Complex[rhs.capacity_];
+  for (std::ptrdiff_t i = 0; i <= rhs.top_index; i += 1) {
     data_[i] = rhs.data_[i];
   }
 }
@@ -25,24 +22,31 @@ StackArr& StackArr::operator=(const StackArr& rhs) {
     }
   }
   top_index = rhs.top_index;
+  return *this;
 }
 void StackArr::Push(const Complex& val) {
-  if (capacity_ > top_index) {
-    top_index += 1;
-    data_[top_index] = val;
-  } else {
+  if (capacity_ == (top_index + 1)) {
     Complex* temp_data = new Complex[capacity_];
     for (std::ptrdiff_t i = 0; i < capacity_; i += 1) {
       temp_data[i] = data_[i];
     }
     delete[] data_;
-    capacity_ += 1;
+    capacity_ *= 2;
     data_ = new Complex[capacity_];
-    for (std::ptrdiff_t i = 0; i < capacity_ - 1; i += 1) {
+    for (std::ptrdiff_t i = 0; i < capacity_ / 2; i += 1) {
       data_[i] = temp_data[i];
     }
-    data_[capacity_] = val;
+    delete[] temp_data;
     top_index += 1;
+    data_[top_index] = val;
+  } else if (capacity_ == 0 && top_index == -1) {
+    capacity_ = (capacity_ + 1) * 2;
+    data_ = new Complex[capacity_];
+    top_index += 1;
+    data_[top_index] = val;
+  } else {
+    top_index += 1;
+    data_[top_index] = val;
   }
 }
 
@@ -57,7 +61,7 @@ bool StackArr::IsEmpty() const noexcept {
 }
 
 const Complex& StackArr::Top() const {
-  if (top_index == - 1) {
+  if (top_index == -1) {
     throw std::out_of_range("Trying to get top element from empty Stack");
   }
   return data_[top_index];
