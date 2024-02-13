@@ -25,7 +25,7 @@ StackArr& StackArr::operator=(const StackArr& rhs) {
   return *this;
 }
 void StackArr::Push(const Complex& val) {
-  if (capacity_ == (top_index + 1)) {
+  if (capacity_ == (top_index + 1) && capacity_ != 0) {
     Complex* temp_data = new Complex[capacity_];
     for (std::ptrdiff_t i = 0; i < capacity_; i += 1) {
       temp_data[i] = data_[i];
