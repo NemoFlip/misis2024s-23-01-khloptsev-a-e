@@ -5,6 +5,8 @@ class StackLst {
 public:
     bool IsEmpty() const noexcept;
     void Push(const Complex& val);
+    const Complex& Top() const;
+
 private:
     struct Node {
     Complex v;

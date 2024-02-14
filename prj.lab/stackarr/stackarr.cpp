@@ -37,17 +37,12 @@ void StackArr::Push(const Complex& val) {
       data_[i] = temp_data[i];
     }
     delete[] temp_data;
-    top_index += 1;
-    data_[top_index] = val;
   } else if (capacity_ == 0 && top_index == -1) {
     capacity_ = (capacity_ + 1) * 2;
     data_ = new Complex[capacity_];
-    top_index += 1;
-    data_[top_index] = val;
-  } else {
-    top_index += 1;
-    data_[top_index] = val;
   }
+  top_index += 1;
+  data_[top_index] = val;
 }
 
 void StackArr::Pop() noexcept {
