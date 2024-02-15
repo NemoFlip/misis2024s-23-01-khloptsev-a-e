@@ -1,5 +1,5 @@
 #include <stacklst/stacklst.hpp>
-
+#include <stdexcept>
 bool StackLst::IsEmpty() const noexcept {
   return (head_ == nullptr);
 }
@@ -14,3 +14,23 @@ void StackLst::Push(const Complex& val) {
     head_->v = val;
   }
 }
+const Complex& StackLst::Top() const {
+  if (this->IsEmpty()) {
+    throw std::logic_error("StackLst - try to get top from empty stack.");
+  }
+  return head_->v;
+}
+
+void StackLst::Pop() noexcept {
+  if (!(this->IsEmpty())) {
+    Node* temp = head_;
+    head_ = head_->next;
+    delete temp;
+  }
+}
+StackLst::StackLst(const StackLst& rhs) {
+
+}
+
+
+
