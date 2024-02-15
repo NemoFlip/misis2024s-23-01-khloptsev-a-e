@@ -9,7 +9,7 @@ public:
     void Push(const Complex& val);
     const Complex& Top() const;
     void Pop() noexcept;
-
+    StackLst& operator=(const StackLst& rhs);
 
 private:
     struct Node {

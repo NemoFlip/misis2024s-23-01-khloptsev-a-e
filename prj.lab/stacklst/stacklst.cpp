@@ -46,6 +46,24 @@ StackLst::StackLst(const StackLst& rhs) {
     StackLst();
   }
 }
+StackLst& StackLst::operator=(const StackLst& rhs) {
+  if (!rhs.IsEmpty()) {
+    Node *tmp = rhs.head_;
+    Node *secondTmp = new Node;
+    secondTmp->v = tmp->v;
+    head_ = secondTmp;
+    tmp = tmp->next;
+    while (tmp != nullptr) {
+      secondTmp->next = new Node;
+      secondTmp->next->v = tmp->v;
+      tmp = tmp->next;
+      secondTmp = secondTmp->next;
+    }
+  } else {
+    StackLst();
+  }
+  return *this;
+}
 
 
 
