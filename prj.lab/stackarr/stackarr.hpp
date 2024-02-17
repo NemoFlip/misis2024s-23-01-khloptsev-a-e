@@ -13,11 +13,11 @@ public:
     [[nodiscard]] StackArr& operator=(const StackArr& rhs);
     void Push(const Complex& val);
     void Pop() noexcept;
-    std::ptrdiff_t GetTopIndex() const noexcept {
-      return top_index;
-    }
     bool IsEmpty() const noexcept;
     [[nodiscard]] const Complex& Top() const;
+    [[nodiscard]] Complex& Top();
+    void Clear() noexcept;
+
 private:
     std::ptrdiff_t capacity_ { 0 };
     std::ptrdiff_t top_index = -1; // индекс верхнего элемента в стэке

@@ -10,6 +10,7 @@ public:
     const Complex& Top() const;
     void Pop() noexcept;
     StackLst& operator=(const StackLst& rhs);
+//    ~StackLst();
 
 private:
     struct Node {

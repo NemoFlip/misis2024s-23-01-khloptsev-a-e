@@ -61,4 +61,16 @@ const Complex& StackArr::Top() const {
   }
   return data_[top_index];
 }
+Complex& StackArr::Top() {
+  if (top_index == -1) {
+    throw std::out_of_range("Trying to get top element from empty Stack");
+  }
+  return data_[top_index];
+}
+void StackArr::Clear() noexcept {
+  for (ptrdiff_t i = 0; i <= top_index; i += 1) {
+    data_[i] = Complex(0.0);
+  }
+  top_index = -1;
+}
 

@@ -50,3 +50,11 @@ TEST_CASE("stackarr test") {
   CHECK(eq1.IsEmpty());
   CHECK(eq2.IsEmpty());
 }
+
+TEST_CASE("Top method tests") {
+  Complex compl1 = Complex(2.4, 1.5);
+  StackArr stack1 = StackArr();
+  stack1.Push(compl1);
+  stack1.Top() = Complex(0.0, 0.0);
+  CHECK_EQ(stack1.Top(), Complex(0.0, 0.0));
+}
