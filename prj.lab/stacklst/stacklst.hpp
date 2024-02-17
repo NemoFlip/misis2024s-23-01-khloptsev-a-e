@@ -3,15 +3,16 @@
 #include <complex/complex.hpp>
 class StackLst {
 public:
-    StackLst(const StackLst& rhs);
-    StackLst() = default;
+    [[nodiscard]] StackLst(const StackLst& rhs);
+    [[nodiscard]] StackLst() = default;
+    [[nodiscard]] StackLst& operator=(const StackLst& rhs);
     bool IsEmpty() const noexcept;
     void Push(const Complex& val);
-    const Complex& Top() const;
     void Pop() noexcept;
-    StackLst& operator=(const StackLst& rhs);
-//    ~StackLst();
-
+    [[nodiscard]] const Complex& Top() const;
+    [[nodiscard]] Complex& Top();
+    void Clear() noexcept;
+    ~StackLst();
 private:
     struct Node {
     Complex v;

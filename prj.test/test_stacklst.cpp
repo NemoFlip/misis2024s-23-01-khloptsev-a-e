@@ -52,9 +52,9 @@ TEST_CASE("stacklst ctor") {
 TEST_CASE("Operator of equality tests") {
   // Testing with 3 elements
   StackLst stack1;
-  Complex compl1 {1.1, 2.3};
-  Complex compl2 {1.2, 2.3};
-  Complex compl3 {1.3, 2.3};
+  Complex compl1{1.1, 2.3};
+  Complex compl2{1.2, 2.3};
+  Complex compl3{1.3, 2.3};
   stack1.Push(compl1);
   stack1.Push(compl2);
   stack1.Push(compl3);
@@ -67,4 +67,17 @@ TEST_CASE("Operator of equality tests") {
   CHECK_EQ(stack2.Top(), compl1);
   stack2.Pop();
   CHECK(stack2.IsEmpty());
+}
+
+TEST_CASE("Clear method test") {
+  StackLst stack1;
+  Complex compl1{1.1, 2.3};
+  Complex compl2{1.2, 2.3};
+  Complex compl3{1.3, 2.3};
+  stack1.Push(compl1);
+  stack1.Push(compl2);
+  stack1.Push(compl3);
+  stack1.Clear();
+  CHECK(stack1.IsEmpty());
+  CHECK_THROWS(stack1.Top());
 }

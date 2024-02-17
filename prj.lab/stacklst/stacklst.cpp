@@ -1,6 +1,5 @@
 #include <stacklst/stacklst.hpp>
 #include <stdexcept>
-#include <vector>
 bool StackLst::IsEmpty() const noexcept {
   return (head_ == nullptr);
 }
@@ -21,6 +20,24 @@ const Complex& StackLst::Top() const {
   }
   return head_->v;
 }
+Complex& StackLst::Top() {
+  if (this->IsEmpty()) {
+    throw std::logic_error("StackLst - try to get top from empty stack.");
+  }
+  return head_->v;
+}
+void StackLst::Clear() noexcept {
+    Node* tmp = head_;
+    while (tmp != nullptr) {
+      head_ = head_->next;
+      delete tmp;
+      tmp = head_;
+  }
+}
+StackLst::~StackLst() {
+  Clear();
+}
+
 
 void StackLst::Pop() noexcept {
   if (!(this->IsEmpty())) {
@@ -31,16 +48,16 @@ void StackLst::Pop() noexcept {
 }
 StackLst::StackLst(const StackLst& rhs) {
   if (!rhs.IsEmpty()) {
-    Node *tmp = rhs.head_;
-    Node *secondTmp = new Node;
-    secondTmp->v = tmp->v;
-    head_ = secondTmp;
-    tmp = tmp->next;
-    while (tmp != nullptr) {
-      secondTmp->next = new Node;
-      secondTmp->next->v = tmp->v;
-      tmp = tmp->next;
-      secondTmp = secondTmp->next;
+    Node* rhsTmp = rhs.head_; // rhs tmp
+    Node* lhsTmp = new Node; // lhs tmp
+    lhsTmp->v = rhsTmp->v;
+    head_ = lhsTmp;
+    rhsTmp = rhsTmp->next;
+    while (rhsTmp != nullptr) {
+      lhsTmp->next = new Node;
+      lhsTmp->next->v = rhsTmp->v;
+      rhsTmp = rhsTmp->next;
+      lhsTmp = lhsTmp->next;
     }
   } else {
     StackLst();
@@ -48,22 +65,23 @@ StackLst::StackLst(const StackLst& rhs) {
 }
 StackLst& StackLst::operator=(const StackLst& rhs) {
   if (!rhs.IsEmpty()) {
-    Node *tmp = rhs.head_;
-    Node *secondTmp = new Node;
-    secondTmp->v = tmp->v;
-    head_ = secondTmp;
-    tmp = tmp->next;
-    while (tmp != nullptr) {
-      secondTmp->next = new Node;
-      secondTmp->next->v = tmp->v;
-      tmp = tmp->next;
-      secondTmp = secondTmp->next;
+    Node* rhsTmp = rhs.head_; // rhs tmp
+    Node* lhsTmp = new Node; // lhs tmp
+    lhsTmp->v = rhsTmp->v;
+    head_ = lhsTmp;
+    rhsTmp = rhsTmp->next;
+    while (rhsTmp != nullptr) {
+      lhsTmp->next = new Node;
+      lhsTmp->next->v = rhsTmp->v;
+      rhsTmp = rhsTmp->next;
+      lhsTmp = lhsTmp->next;
     }
   } else {
     StackLst();
   }
   return *this;
 }
+
 
 
 
