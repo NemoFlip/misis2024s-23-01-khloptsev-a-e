@@ -1,6 +1,8 @@
 #ifndef STACKLST_HPP
 #define STACKLST_HPP
 #include <complex/complex.hpp>
+#include <cstddef>
+
 class StackLst {
 public:
     [[nodiscard]] StackLst(const StackLst& rhs);
