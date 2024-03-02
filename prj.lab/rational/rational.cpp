@@ -131,14 +131,18 @@ Rational operator/(const std::int64_t lhs, const Rational& rhs) {
 std::istream& Rational::ReadFrom(std::istream& istrm) noexcept {
   std::int64_t numer = 0;
   char separator;
-  std::int64_t denom = 0;
-  istrm >> numer >> separator >> denom;
-  if (istrm.good()) {
-    if (separator == Rational::sep) {
+  std::int64_t denom = 1;
+  istrm >> numer;
+  istrm.get(separator);
+  int64_t trash = istrm.peek();
+  istrm >> denom;
+  if (!istrm || trash > '9' || trash < '0') {
+    istrm.setstate(std::ios_base::failbit);
+  }
+  if (istrm.good() || istrm.eof()) {
+    if (separator == Rational::sep && den_ > 0) {
       num_ = numer;
       den_ = denom;
-    } else {
-      istrm.setstate(std::ios_base::failbit);
     }
   }
   return istrm;
