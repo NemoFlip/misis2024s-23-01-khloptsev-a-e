@@ -1,7 +1,20 @@
 #include <queuearr/queuearr.hpp>
 #include <stdexcept>
 
-QueueArr::QueueArr(const QueueArr& rhs) {
+QueueArr::QueueArr(const QueueArr& rhs): capacity_ {rhs.capacity_} {
+  data_ = new Complex[capacity_]; // надо ли нам приводить в нормальную форму очередь?
+  std::ptrdiff_t head_tmp = rhs.head_index;
+  head_index = 0;
+  tail_index = 0;
+  data_[head_index] = rhs.data_[head_tmp];
+  while (head_tmp != rhs.tail_index) {
+    head_tmp = (head_tmp + 1) % capacity_;
+    tail_index += 1;
+    data_[tail_index] = rhs.data_[head_tmp];
+  }
+}
+
+QueueArr& QueueArr::operator=(const QueueArr& rhs) {
 
 }
 
@@ -10,6 +23,7 @@ void QueueArr::Push(const Complex& val) {
     capacity_ = (capacity_ + 1) * 2;
     data_ = new Complex[capacity_];
     tail_index += 1;
+    head_index += 1;
     data_[head_index] = val;
   } else if ((tail_index + 1) % capacity_ != head_index) { // есть место
     tail_index = (tail_index + 1) % capacity_;
@@ -60,4 +74,8 @@ bool QueueArr::IsEmpty() const noexcept {
 }
 QueueArr::~QueueArr() {
   delete[] data_;
+}
+void QueueArr::Clear() noexcept {
+  head_index = -1;
+  tail_index = -1;
 }

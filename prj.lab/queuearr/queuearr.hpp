@@ -6,19 +6,20 @@ class QueueArr {
 public:
     QueueArr() = default;
     QueueArr(const QueueArr& rhs);
+    QueueArr& operator=(const QueueArr& rhs);
     ~QueueArr();
     void Push(const Complex& val);
     void Pop() noexcept;
     bool IsEmpty() const noexcept;
-    const Complex& Top() const;
-    Complex& Top();
+    [[nodiscard]] const Complex& Top() const;
+    [[nodiscard]] Complex& Top();
+    void Clear() noexcept;
 
 private:
     std::ptrdiff_t capacity_ { 0 };
     std::ptrdiff_t head_index = -1; // индекс головы очереди
     std::ptrdiff_t tail_index = -1; // индекс хвоста очереди
     Complex* data_ = nullptr;
-
 };
 
 #endif
