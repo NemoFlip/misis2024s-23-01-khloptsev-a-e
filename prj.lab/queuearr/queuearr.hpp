@@ -15,7 +15,6 @@ public:
 
 private:
     std::ptrdiff_t capacity_ { 0 };
-    std::ptrdiff_t size_ { 0 };
     std::ptrdiff_t head_index = -1; // индекс головы очереди
     std::ptrdiff_t tail_index = -1; // индекс хвоста очереди
     Complex* data_ = nullptr;

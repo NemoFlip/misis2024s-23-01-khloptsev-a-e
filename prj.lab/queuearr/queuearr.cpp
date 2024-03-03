@@ -6,38 +6,40 @@ QueueArr::QueueArr(const QueueArr& rhs) {
 }
 
 void QueueArr::Push(const Complex& val) {
-  if (IsEmpty()) {
+  if (IsEmpty() && head_index == -1) {
     capacity_ = (capacity_ + 1) * 2;
     data_ = new Complex[capacity_];
-    head_index += 1;
     tail_index += 1;
     data_[head_index] = val;
-    size_ += 1;
-  } else if (capacity_ == size_) {
-    capacity_ = capacity_ * 2;
-    Complex* tmp = new Complex[capacity_];
-    for (std::ptrdiff_t i = 0; i < capacity_; i += 1) {
-      if (i <= tail_index) {
-        tmp[i] = data_[i];
-      } else {
-        tmp[i] = {0.0, 0.0};
-      }
+  } else if ((tail_index + 1) % capacity_ != head_index) { // есть место
+    tail_index = (tail_index + 1) % capacity_;
+    data_[tail_index] = val;
+  } else { // нет места - надо выделять
+    Complex* tmp = data_;
+    data_ = new Complex[capacity_ * 2];
+    std::ptrdiff_t tmp_index = 0; // индекс для заполнения очереди уже добавленными элементами
+    data_[tmp_index] = tmp[head_index];
+    while (head_index != tail_index) {
+      head_index = (head_index + 1) % capacity_;
+      tmp_index += 1;
+      data_[tmp_index] = tmp[head_index];
     }
-    delete[] data_;
-    data_ = tmp;
-    tail_index += 1;
-    data_[tail_index] = val;
-    size_ += 1;
-  } else {
-    tail_index += 1;
-    data_[tail_index] = val;
-    size_ += 1;
+    delete[] tmp;
+    tmp_index += 1;
+    data_[tmp_index] = val;
+    head_index = 0;
+    tail_index = tmp_index;
+    capacity_ *= 2;
   }
 }
 void QueueArr::Pop() noexcept {
   if (!IsEmpty()) {
-    head_index += 1;
-    size_ -= 1;
+    if (head_index == tail_index) {
+      head_index = -1;
+      tail_index = -1;
+    } else {
+      head_index = (head_index + 1) % capacity_;
+    }
   }
 }
 const Complex& QueueArr::Top() const {
@@ -54,7 +56,7 @@ Complex& QueueArr::Top() {
 }
 
 bool QueueArr::IsEmpty() const noexcept {
-  return (size_ == 0);
+  return (head_index == -1 && tail_index == -1);
 }
 QueueArr::~QueueArr() {
   delete[] data_;
