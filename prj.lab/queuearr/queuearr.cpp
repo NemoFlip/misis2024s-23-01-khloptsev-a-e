@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 QueueArr::QueueArr(const QueueArr& rhs): capacity_ {rhs.capacity_} {
-  data_ = new Complex[capacity_]; // надо ли нам приводить в нормальную форму очередь?
+  data_ = new Complex[capacity_];
   std::ptrdiff_t head_tmp = rhs.head_index;
   head_index = 0;
   tail_index = 0;
@@ -15,7 +15,7 @@ QueueArr::QueueArr(const QueueArr& rhs): capacity_ {rhs.capacity_} {
 }
 
 QueueArr& QueueArr::operator=(const QueueArr& rhs) {
-  data_ = new Complex[capacity_]; // надо ли нам приводить в нормальную форму очередь?
+  data_ = new Complex[capacity_];
   std::ptrdiff_t head_tmp = rhs.head_index;
   head_index = 0;
   tail_index = 0;
