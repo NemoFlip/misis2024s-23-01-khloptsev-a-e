@@ -1,7 +1,30 @@
 #include <queuelstpr/queuelstpr.hpp>
 #include <stdexcept>
 QueueLstPr::QueueLstPr(const QueueLstPr& rhs) {
-
+  if (!rhs.IsEmpty()) {
+    Node* rhs_tmp = rhs.head_;
+    Push(rhs_tmp->v);
+    rhs_tmp = rhs_tmp->next;
+    while (rhs_tmp != nullptr) {
+      Push(rhs_tmp->v);
+      rhs_tmp = rhs_tmp->next;
+    }
+  } else {
+    QueueLstPr();
+  }
+}
+QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
+  if (!rhs.IsEmpty()) {
+    Node* rhs_tmp = rhs.head_;
+    Push(rhs_tmp->v);
+    rhs_tmp = rhs_tmp->next;
+    while (rhs_tmp != nullptr) {
+      Push(rhs_tmp->v);
+      rhs_tmp = rhs_tmp->next;
+    }
+  } else {
+    QueueLstPr();
+  }
 }
 bool QueueLstPr::IsEmpty() const noexcept {
   return (head_ == nullptr);
@@ -76,4 +99,16 @@ void QueueLstPr::Pop() noexcept {
       delete tmp;
     }
   }
+}
+void QueueLstPr::Clear() noexcept {
+  Node* tmp = head_;
+  while (tmp != nullptr) {
+    head_ = head_->next;
+    delete tmp;
+    tmp = head_;
+  }
+  tail_ = nullptr;
+}
+QueueLstPr::~QueueLstPr() {
+  Clear();
 }

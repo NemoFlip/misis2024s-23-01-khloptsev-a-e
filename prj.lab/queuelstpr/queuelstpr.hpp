@@ -5,12 +5,14 @@ class QueueLstPr {
 public:
     QueueLstPr() = default;
     QueueLstPr(const QueueLstPr& rhs);
+    QueueLstPr& operator=(const QueueLstPr& rhs);
     bool IsEmpty() const noexcept;
     void Push(float val);
     void Pop() noexcept;
     const float& Top() const;
     float& Top();
-
+    void Clear() noexcept;
+    ~QueueLstPr();
 private:
     struct Node {
       float v = 0.0f;
