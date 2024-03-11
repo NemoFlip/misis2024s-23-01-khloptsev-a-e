@@ -25,6 +25,7 @@ QueueArr& QueueArr::operator=(const QueueArr& rhs) {
     tail_index += 1;
     data_[tail_index] = rhs.data_[head_tmp];
   }
+  return *this;
 }
 
 void QueueArr::Push(const Complex& val) {

@@ -25,6 +25,7 @@ QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
   } else {
     QueueLstPr();
   }
+  return *this;
 }
 bool QueueLstPr::IsEmpty() const noexcept {
   return (head_ == nullptr);
