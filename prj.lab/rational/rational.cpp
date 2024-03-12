@@ -128,7 +128,7 @@ Rational operator/(const std::int64_t lhs, const Rational& rhs) {
   return lhsd / rhs;
 }
 
-std::istream& Rational::ReadFrom(std::istream& istrm) noexcept {
+std::istream& Rational::ReadFrom(std::istream& istrm) {
   std::int64_t numer = 0;
   char separator;
   std::int64_t denom = 1;
@@ -141,18 +141,19 @@ std::istream& Rational::ReadFrom(std::istream& istrm) noexcept {
   }
   if (istrm.good() || istrm.eof()) {
     if (separator == Rational::sep && den_ > 0) {
-      num_ = numer;
-      den_ = denom;
+      std::int64_t divisor = gcd(numer, denom);
+      num_ = numer / divisor;
+      den_ = denom / divisor;
     }
   }
   return istrm;
 }
-std::ostream& Rational::WriteTo(std::ostream& ostrm) const noexcept {
-  return ostrm << num_ << sep << den_;
+std::ostream& Rational::WriteTo(std::ostream& ostrm) const {
+  return ostrm << num_ << Rational::sep << den_;
 }
-std::ostream& operator<<(std::ostream& os, const Rational& rhs) noexcept {
+std::ostream& operator<<(std::ostream& os, const Rational rhs) {
   return rhs.WriteTo(os);
 }
-std::istream& operator>>(std::istream& is, Rational& rhs) noexcept {
+std::istream& operator>>(std::istream& is, Rational& rhs) {
   return rhs.ReadFrom(is);
 }

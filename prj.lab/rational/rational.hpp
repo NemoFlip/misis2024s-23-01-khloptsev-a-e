@@ -17,8 +17,8 @@ public:
     // Методы
     [[nodiscard]] std::int64_t num() const noexcept { return num_; }
     [[nodiscard]] std::int64_t den() const noexcept { return den_; }
-    std::istream& ReadFrom(std::istream& istrm) noexcept;
-    std::ostream& WriteTo(std::ostream& ostrm) const noexcept;
+    std::istream& ReadFrom(std::istream& istrm);
+    std::ostream& WriteTo(std::ostream& ostrm) const;
     // Операторы
     [[nodiscard]] bool operator==(const Rational& rhs) const noexcept;
     [[nodiscard]] bool operator!=(const Rational& rhs) const noexcept {
@@ -68,6 +68,6 @@ private:
 [[nodiscard]] Rational operator-(const std::int64_t lhs, const Rational& rhs) noexcept;
 [[nodiscard]] Rational operator*(const std::int64_t lhs, const Rational& rhs) noexcept;
 [[nodiscard]] Rational operator/(const std::int64_t lhs, const Rational& rhs);
-std::ostream& operator<<(std::ostream& os, const Rational& rhs) noexcept;
-std::istream& operator>>(std::istream& is, Rational& rhs) noexcept;
+std::ostream& operator<<(std::ostream& os, const Rational& rhs);
+std::istream& operator>>(std::istream& is, const Rational rhs);
 #endif
