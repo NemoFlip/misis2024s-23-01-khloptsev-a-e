@@ -10,7 +10,7 @@ public:
     void Push(float val);
     void Pop() noexcept;
     const float& Top() const;
-    float& Top();
+    float& Top(); // TODO: пометить все методы, которые возвращают ссылку как '&' - то есть только для lvalue(чтобы нельзя было создать висячую ссылку на поле временного объекта)
     void Clear() noexcept;
     ~QueueLstPr();
 private:

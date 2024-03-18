@@ -1,4 +1,5 @@
 #include <rational/rational.hpp>
+#include <iostream>
 Rational::Rational(const std::int64_t numer, const std::int64_t denom) : num_{numer}, den_{denom} {
   if (denom == 0) {
     throw std::invalid_argument("Division by zero");
@@ -144,6 +145,8 @@ std::istream& Rational::ReadFrom(std::istream& istrm) {
       std::int64_t divisor = gcd(numer, denom);
       num_ = numer / divisor;
       den_ = denom / divisor;
+    } else {
+      istrm.setstate(std::ios_base::failbit);
     }
   }
   return istrm;

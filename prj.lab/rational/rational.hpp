@@ -1,18 +1,20 @@
 #pragma once
 #ifndef RATIONAL_RATIONAL_HPP_20231113
 #define RATIONAL_RATIONAL_HPP_20231113
-#include <iostream>
 #include <stdexcept>
 #include <cstdint>
+#include <cmath>
 #include <iosfwd>
 class Rational {
 public:
-    // Конструкторы
+    // Правило пяти
     [[nodiscard]] Rational() = default;
     [[nodiscard]] Rational(const Rational& rhs) = default;
     [[nodiscard]] explicit Rational(const std::int64_t numer) noexcept: num_{numer} { };
     [[nodiscard]] Rational(const std::int64_t numer, const std::int64_t denom);
     [[nodiscard]] Rational& operator=(const Rational& rhs) = default;
+    Rational(Rational&& rhs) = default;
+    Rational& operator=(Rational&& rhs) = default;
     ~Rational() = default;
     // Методы
     [[nodiscard]] std::int64_t num() const noexcept { return num_; }
@@ -68,6 +70,6 @@ private:
 [[nodiscard]] Rational operator-(const std::int64_t lhs, const Rational& rhs) noexcept;
 [[nodiscard]] Rational operator*(const std::int64_t lhs, const Rational& rhs) noexcept;
 [[nodiscard]] Rational operator/(const std::int64_t lhs, const Rational& rhs);
-std::ostream& operator<<(std::ostream& os, const Rational& rhs);
-std::istream& operator>>(std::istream& is, const Rational rhs);
+std::ostream& operator<<(std::ostream& os, const Rational rhs);
+std::istream& operator>>(std::istream& is, Rational& rhs);
 #endif

@@ -5,12 +5,14 @@
 #include <iosfwd>
 
 struct Complex {
-    double re{0.0};
-    double im{0.0};
+    double re {0.0};
+    double im {0.0};
     [[nodiscard]] Complex() = default;
     [[nodiscard]] Complex(const Complex& rhs) = default;
     [[nodiscard]] Complex(const double real, const double imaginary): re{real}, im{imaginary} { };
     [[nodiscard]] explicit Complex(const double real): re{real} { }
+    Complex(Complex&& rhs) = default;
+    Complex& operator=(Complex&& rhs) = default;
 
     Complex& operator=(const Complex& rhs) {
       re = rhs.re;
