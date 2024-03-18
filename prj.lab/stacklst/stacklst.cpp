@@ -4,7 +4,7 @@ bool StackLst::IsEmpty() const noexcept {
   return (head_ == nullptr);
 }
 void StackLst::Push(const Complex& val) {
-  if (!(this->IsEmpty())) {
+  if (!IsEmpty()) {
     Node* temp = new Node;
     temp->v = val;
     temp->next = head_;
@@ -81,7 +81,15 @@ StackLst& StackLst::operator=(const StackLst& rhs) {
   }
   return *this;
 }
-
+StackLst::StackLst(StackLst&& rhs) noexcept {
+  std::swap(head_, rhs.head_);
+}
+StackLst& StackLst::operator=(StackLst&& rhs) noexcept {
+  if (this != &rhs) {
+    std::swap(head_, rhs.head_);
+  }
+  return *this;
+}
 
 
 

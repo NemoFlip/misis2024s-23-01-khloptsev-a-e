@@ -6,10 +6,12 @@ class StackArr {
 public:
     [[nodiscard]] StackArr() = default;
     [[nodiscard]] StackArr(const StackArr& rhs);
+    StackArr(StackArr&& rhs) noexcept;
     ~StackArr() {
       delete[] data_;
       data_ = nullptr;
     }
+    StackArr& operator=(StackArr&& rhs) noexcept;
     [[nodiscard]] StackArr& operator=(const StackArr& rhs);
     void Push(const Complex& val);
     void Pop() noexcept;

@@ -5,8 +5,10 @@
 
 class StackLst {
 public:
-    [[nodiscard]] StackLst(const StackLst& rhs);
     [[nodiscard]] StackLst() = default;
+    [[nodiscard]] StackLst(const StackLst& rhs);
+    StackLst(StackLst&& rhs) noexcept;
+    StackLst& operator=(StackLst&& rhs) noexcept;
     [[nodiscard]] StackLst& operator=(const StackLst& rhs);
     bool IsEmpty() const noexcept;
     void Push(const Complex& val);

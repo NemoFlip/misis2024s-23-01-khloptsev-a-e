@@ -13,6 +13,24 @@ QueueArr::QueueArr(const QueueArr& rhs): capacity_ {rhs.capacity_} {
     data_[tail_index] = rhs.data_[head_tmp];
   }
 }
+QueueArr::QueueArr(QueueArr&& rhs) noexcept {
+  std::swap(head_index, rhs.head_index);
+  std::swap(tail_index, rhs.tail_index);
+  std::swap(data_, rhs.data_);
+  std::swap(capacity_, rhs.capacity_);
+}
+QueueArr& QueueArr::operator=(QueueArr&& rhs) noexcept {
+  if (this != &rhs) {
+    std::swap(head_index, rhs.head_index);
+    std::swap(tail_index, rhs.tail_index);
+    std::swap(data_, rhs.data_);
+    std::swap(capacity_, rhs.capacity_);
+  }
+  return *this;
+}
+std::ptrdiff_t QueueArr::Count() const { // TODO: Make this method
+
+}
 
 QueueArr& QueueArr::operator=(const QueueArr& rhs) {
   data_ = new Complex[capacity_];
@@ -80,7 +98,7 @@ Complex& QueueArr::Top() {
 }
 
 bool QueueArr::IsEmpty() const noexcept {
-  return (head_index == -1 && tail_index == -1);
+  return (head_index < 0);
 }
 QueueArr::~QueueArr() {
   delete[] data_;

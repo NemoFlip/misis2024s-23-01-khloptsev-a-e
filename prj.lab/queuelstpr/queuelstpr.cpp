@@ -13,6 +13,10 @@ QueueLstPr::QueueLstPr(const QueueLstPr& rhs) {
     QueueLstPr();
   }
 }
+QueueLstPr::QueueLstPr(QueueLstPr&& rhs) noexcept {
+  std::swap(head_, rhs.head_);
+  std::swap(tail_, rhs.tail_);
+}
 QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
   if (!rhs.IsEmpty()) {
     Node* rhs_tmp = rhs.head_;
@@ -24,6 +28,13 @@ QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
     }
   } else {
     QueueLstPr();
+  }
+  return *this;
+}
+QueueLstPr& QueueLstPr::operator=(QueueLstPr&& rhs) noexcept {
+  if (this != &rhs) {
+    std::swap(head_, rhs.head_);
+    std::swap(tail_, rhs.tail_);
   }
   return *this;
 }

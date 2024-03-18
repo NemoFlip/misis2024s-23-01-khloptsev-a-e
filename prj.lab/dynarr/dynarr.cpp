@@ -2,17 +2,30 @@
 #include <stdexcept>
 
 DynArr::DynArr(const DynArr& dynarr): size_{dynarr.size_}, capacity_{dynarr.capacity_}, data_{new float[capacity_]} {
-  for (std::ptrdiff_t i = 0; i < dynarr.size_; i += 1) {
+  for (std::ptrdiff_t i = 0; i < dynarr.capacity_; i += 1) {
     data_[i] = dynarr.data_[i];
   }
 }
+DynArr::DynArr(DynArr&& rhs) noexcept {
+  std::swap(size_, rhs.size_);
+  std::swap(capacity_, rhs.capacity_);
+  std::swap(data_, rhs.data_);
+}
+DynArr& DynArr::operator=(DynArr&& rhs) noexcept {
+  if (this != &rhs) {
+    std::swap(size_, rhs.size_);
+    std::swap(capacity_, rhs.capacity_);
+    std::swap(data_, rhs.data_);
+  }
+  return *this;
+}
 
-DynArr::DynArr(const std::ptrdiff_t size): size_{size}, capacity_{size} {
+DynArr::DynArr(const std::ptrdiff_t size): size_{ size }, capacity_{ size } {
   if (size < 0) {
     throw std::invalid_argument("Negative size of DynArr");
   }
-  data_ = new float[size];
-  for (std::ptrdiff_t i = 0; i < size; i += 1) {
+  data_ = new float[capacity_];
+  for (std::ptrdiff_t i = 0; i < capacity_; i += 1) {
     data_[i] = 0.0f;
   }
 }
@@ -71,12 +84,11 @@ void DynArr::Resize(const std::ptrdiff_t size) {
     }
     delete[] dataTemp;
     capacity_ = size;
-    size_ = size;
   } else {
     for (std::ptrdiff_t i = size_; i < size; i += 1) {
       data_[i] = 0.0f;
     }
-    size_ = size;
   }
+  size_ = size;
 }
 

@@ -5,7 +5,9 @@ class QueueLstPr {
 public:
     QueueLstPr() = default;
     QueueLstPr(const QueueLstPr& rhs);
+    QueueLstPr(QueueLstPr&& rhs) noexcept;
     QueueLstPr& operator=(const QueueLstPr& rhs);
+    QueueLstPr& operator=(QueueLstPr&& rhs) noexcept;
     bool IsEmpty() const noexcept;
     void Push(float val);
     void Pop() noexcept;

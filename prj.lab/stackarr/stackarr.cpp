@@ -7,8 +7,22 @@ StackArr::StackArr(const StackArr& rhs): capacity_ {rhs.capacity_}, top_index { 
     data_[i] = rhs.data_[i];
   }
 }
+StackArr::StackArr(StackArr&& rhs) noexcept {
+  std::swap(top_index, rhs.top_index);
+  std::swap(data_, rhs.data_);
+  std::swap(capacity_, rhs.capacity_);
+}
 
-StackArr& StackArr::operator=(const StackArr& rhs) {
+StackArr& StackArr::operator=(StackArr&& rhs) noexcept {
+  if (this != &rhs) {
+    std::swap(top_index, rhs.top_index);
+    std::swap(data_, rhs.data_);
+    std::swap(capacity_, rhs.capacity_);
+  }
+  return *this;
+}
+
+StackArr& StackArr::operator=(const StackArr& rhs) { // TODO: Fix all operator=
   if (capacity_ < rhs.capacity_) {
     delete[] data_;
     data_ = new Complex[rhs.capacity_];
