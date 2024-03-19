@@ -22,20 +22,22 @@ StackArr& StackArr::operator=(StackArr&& rhs) noexcept {
   return *this;
 }
 
-StackArr& StackArr::operator=(const StackArr& rhs) { // TODO: Fix all operator=
-  if (capacity_ < rhs.capacity_) {
-    delete[] data_;
-    data_ = new Complex[rhs.capacity_];
-    capacity_ = rhs.capacity_;
-  }
-  for (ptrdiff_t i = 0; i < capacity_; i += 1) {
-    if (i <= rhs.top_index) {
-      data_[i] = rhs.data_[i];
-    } else {
-      data_[i] = Complex(0.0);
+StackArr& StackArr::operator=(const StackArr& rhs) {
+  if (this != &rhs) {
+    if (capacity_ < rhs.capacity_) {
+      delete[] data_;
+      data_ = new Complex[rhs.capacity_];
+      capacity_ = rhs.capacity_;
     }
+    for (ptrdiff_t i = 0; i < capacity_; i += 1) {
+      if (i <= rhs.top_index) {
+        data_[i] = rhs.data_[i];
+      } else {
+        data_[i] = Complex(0.0);
+      }
+    }
+    top_index = rhs.top_index;
   }
-  top_index = rhs.top_index;
   return *this;
 }
 void StackArr::Push(const Complex& val) {

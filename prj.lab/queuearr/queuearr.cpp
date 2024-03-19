@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 QueueArr::QueueArr(const QueueArr& rhs): capacity_ {rhs.capacity_} {
-  data_ = new Complex[capacity_];
+  data_ = new Complex[rhs.capacity_];
   std::ptrdiff_t head_tmp = rhs.head_index;
   head_index = 0;
   tail_index = 0;
@@ -33,15 +33,21 @@ std::ptrdiff_t QueueArr::Count() const { // TODO: Make this method
 }
 
 QueueArr& QueueArr::operator=(const QueueArr& rhs) {
-  data_ = new Complex[capacity_];
-  std::ptrdiff_t head_tmp = rhs.head_index;
-  head_index = 0;
-  tail_index = 0;
-  data_[head_index] = rhs.data_[head_tmp];
-  while (head_tmp != rhs.tail_index) {
-    head_tmp = (head_tmp + 1) % capacity_;
-    tail_index += 1;
-    data_[tail_index] = rhs.data_[head_tmp];
+  if (this != &rhs) {
+    if (capacity_ < rhs.capacity_) {
+      delete[] data_;
+      data_ = new Complex[rhs.capacity_];
+      capacity_ = rhs.capacity_;
+    }
+    std::ptrdiff_t head_tmp = rhs.head_index;
+    head_index = 0;
+    tail_index = 0;
+    data_[head_index] = rhs.data_[head_tmp];
+    while (head_tmp != rhs.tail_index) {
+      head_tmp = (head_tmp + 1) % capacity_;
+      tail_index += 1;
+      data_[tail_index] = rhs.data_[head_tmp];
+    }
   }
   return *this;
 }

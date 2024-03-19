@@ -20,6 +20,18 @@ TEST_CASE("test Push and Pop methods: just functionality") {
   CHECK(queue1.IsEmpty());
 }
 
+TEST_CASE("copy ctor tests") {
+  QueueArr queue1 { };
+  Complex compl1 = {1.0, 0.0};
+  Complex compl2 = {2.0, 0.0};
+  Complex compl3 = {3.0, 0.0};
+  queue1.Push(compl1);
+  queue1.Push(compl2);
+  queue1.Push(compl3);
+  QueueArr queue2 { queue1 };
+  CHECK_EQ(queue2.Top(), compl1);
+}
+
 TEST_CASE("test Push and Pop methods: make queue straight(head_ < tail_)") {
   QueueArr queue1 { };
   Complex compl1 = {1.0, 0.0};
