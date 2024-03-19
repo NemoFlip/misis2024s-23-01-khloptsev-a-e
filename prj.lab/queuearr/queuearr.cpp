@@ -28,8 +28,13 @@ QueueArr& QueueArr::operator=(QueueArr&& rhs) noexcept {
   }
   return *this;
 }
-std::ptrdiff_t QueueArr::Count() const { // TODO: Make this method
-
+std::ptrdiff_t QueueArr::Count() const {
+  if (IsEmpty()) {
+    return 0;
+  } if (tail_index < head_index) {
+    return (tail_index - head_index + capacity_ + 1);
+  }
+  return (tail_index - head_index + 1);
 }
 
 QueueArr& QueueArr::operator=(const QueueArr& rhs) {
