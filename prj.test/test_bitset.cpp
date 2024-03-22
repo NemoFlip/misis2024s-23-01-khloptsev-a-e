@@ -3,5 +3,5 @@
 #include <bitset/bitset.hpp>
 
 TEST_CASE("some tests") {
-
+  BitSet bitset1 = BitSet(100);
 }

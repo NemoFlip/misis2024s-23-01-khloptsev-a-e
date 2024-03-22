@@ -6,14 +6,23 @@
 class BitSet {
 public:
     BitSet() = default;
-    BitSet(const int32_t);
+    explicit BitSet(uint32_t size);
     BitSet(const BitSet& rhs);
     BitSet(BitSet&& rhs) noexcept;
-    BitSet& operator=(const BitSet& rhs);
+    BitSet& operator=(const BitSet& rhs) = default;
     BitSet& operator=(BitSet&& rhs) noexcept;
-    ~BitSet();
+    ~BitSet() = default;
+    [[nodiscard]] uint32_t Size() const noexcept;
+    void Resize(const uint32_t size);
+    void Set(const int32_t idx, const bool v);
+    bool Get(const int32_t idx) const;
+    void Fill(const bool val);
 private:
     std::vector<uint32_t> data_ { };
+    uint32_t size_ = 0;
 };
-
+BitSet operator&(const BitSet& lhs, const BitSet& rhs);
+BitSet operator|(const BitSet& lhs, const BitSet& rhs);
+BitSet operator^(const BitSet& lhs, const BitSet& rhs);
+BitSet operator~(const BitSet& lhs);
 #endif
