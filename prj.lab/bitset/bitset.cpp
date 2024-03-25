@@ -45,8 +45,8 @@ void BitSet::Set(const uint32_t idx, const bool v) {
 
 
 bool BitSet::Get(const uint32_t idx) const {
-  uint32_t data_index = data_.size() - 1 - (idx) / 32;
-  uint32_t curr_index = idx - 32 * (idx / 32);
+  uint32_t data_index = data_.size() - 1 - (idx) / 32; // index of block in vector
+  uint32_t curr_index = idx - 32 * (idx / 32); // index of block sequence
   uint32_t one_temp = 1;
   one_temp = one_temp << curr_index;
   uint32_t result = one_temp & data_[data_index];
@@ -60,8 +60,6 @@ void BitSet::Fill(const bool val) {
   }
 }
 BitSet operator&(const BitSet& lhs, const BitSet& rhs) {
-
-
 
 }
 BitSet operator|(const BitSet& lhs, const BitSet& rhs) {
