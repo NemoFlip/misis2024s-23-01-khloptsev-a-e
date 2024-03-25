@@ -7,15 +7,15 @@ class BitSet {
 public:
     BitSet() = default;
     explicit BitSet(uint32_t size);
-    BitSet(const BitSet& rhs);
+    BitSet(const BitSet& rhs) = default;
     BitSet(BitSet&& rhs) noexcept;
     BitSet& operator=(const BitSet& rhs) = default;
     BitSet& operator=(BitSet&& rhs) noexcept;
     ~BitSet() = default;
     [[nodiscard]] uint32_t Size() const noexcept;
     void Resize(const uint32_t size);
-    void Set(const int32_t idx, const bool v);
-    bool Get(const int32_t idx) const;
+    void Set(const uint32_t idx, const bool v);
+    [[nodiscard]] bool Get(const uint32_t idx) const;
     void Fill(const bool val);
 private:
     std::vector<uint32_t> data_ { };
