@@ -14,6 +14,9 @@ public:
     ~BitSet() = default;
     [[nodiscard]] uint32_t Size() const noexcept;
     void Resize(const uint32_t size);
+    std::vector<uint32_t> Vec() {
+      return data_;
+    }
     void Set(const uint32_t idx, const bool v);
     [[nodiscard]] bool Get(const uint32_t idx) const;
     void Fill(const bool val);

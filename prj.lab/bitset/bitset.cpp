@@ -1,7 +1,7 @@
 #include <bitset/bitset.hpp>
 #include <stdexcept>
 
-BitSet::BitSet(const uint32_t size): data_ { ((size) / 32) + 1 }, size_ { size } {
+BitSet::BitSet(const uint32_t size): data_(((size) / 32) + 1, 0), size_ { size } {
 
 }
 BitSet::BitSet(BitSet&& rhs) noexcept {
@@ -50,6 +50,7 @@ bool BitSet::Get(const uint32_t idx) const {
   uint32_t one_temp = 1;
   one_temp = one_temp << curr_index;
   uint32_t result = one_temp & data_[data_index];
+  result = result >> curr_index;
   return result == 1;
 }
 
@@ -60,14 +61,26 @@ void BitSet::Fill(const bool val) {
   }
 }
 BitSet operator&(const BitSet& lhs, const BitSet& rhs) {
-
+  BitSet lhs_tmp = lhs;
+  for (int i = 0; i < lhs_tmp.Size(); i += 1) {
+    lhs_tmp.Set(i, lhs.Get(i) & rhs.Get(i));
+  }
+  return lhs_tmp;
 }
 BitSet operator|(const BitSet& lhs, const BitSet& rhs) {
-
+  BitSet lhs_tmp = lhs;
+  for (int i = 0; i < lhs_tmp.Size(); i += 1) {
+    lhs_tmp.Set(i, lhs.Get(i) | rhs.Get(i));
+  }
+  return lhs_tmp;
 }
 BitSet operator^(const BitSet& lhs, const BitSet& rhs) {
 
 }
 BitSet operator~(const BitSet& lhs) {
-
+  BitSet lhs_tmp = lhs;
+  for (int i = 0; i < lhs_tmp.Size(); i += 1) {
+    lhs_tmp.Set(i, ~lhs.Get(i));
+  }
+  return lhs_tmp;
 }
