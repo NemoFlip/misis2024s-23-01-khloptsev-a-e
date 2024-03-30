@@ -8,4 +8,11 @@ TEST_CASE("some tests") {
 //  CHECK_EQ(bitset1.Vec().size(), 4);
   bitset1.Set(5, true);
   CHECK_EQ(bitset1.Get(5), true);
+
+  bitset1[5] = false;
+  CHECK_EQ(bitset1.Get(5), false);
+  bitset1[5] = true;
+  CHECK_EQ(bitset1.Get(5), true);
+
+
 }

@@ -1,7 +1,7 @@
 #include <bitset/bitset.hpp>
 #include <stdexcept>
 
-BitSet::BitSet(const uint32_t size): data_(((size) / 32) + 1, 0), size_ { size } {
+BitSet::BitSet(const int32_t size): data_(((size) / 32) + 1, 0), size_ { size } {
 
 }
 BitSet::BitSet(BitSet&& rhs) noexcept {
@@ -18,7 +18,10 @@ BitSet& BitSet::operator=(BitSet&& rhs) noexcept {
 uint32_t BitSet::Size() const noexcept {
   return size_;
 }
-void BitSet::Resize(const uint32_t size) {
+void BitSet::Resize(const int32_t size) {
+  if (size < 0) {
+    throw std::logic_error("try to resize with negative size");
+  }
   uint32_t capacity = (data_.size()) * 32;
   if (size > capacity) {
     uint32_t add_count = ((size - capacity) - 1) / 32 + 1;
@@ -28,7 +31,7 @@ void BitSet::Resize(const uint32_t size) {
   }
   size_ = size;
 }
-void BitSet::Set(const uint32_t idx, const bool v) {
+void BitSet::Set(const int32_t idx, const bool v) {
   if (size_ <= idx) {
     throw std::out_of_range("Index in out of range");
   }
@@ -44,7 +47,7 @@ void BitSet::Set(const uint32_t idx, const bool v) {
 }
 
 
-bool BitSet::Get(const uint32_t idx) const {
+bool BitSet::Get(const int32_t idx) const {
   uint32_t data_index = data_.size() - 1 - (idx) / 32; // index of block in vector
   uint32_t curr_index = idx - 32 * (idx / 32); // index of block sequence
   uint32_t one_temp = 1;
@@ -61,6 +64,7 @@ void BitSet::Fill(const bool val) {
   }
 }
 BitSet operator&(const BitSet& lhs, const BitSet& rhs) {
+  // TODO: Make check of different size
   BitSet lhs_tmp = lhs;
   for (int i = 0; i < lhs_tmp.Size(); i += 1) {
     lhs_tmp.Set(i, lhs.Get(i) & rhs.Get(i));
@@ -83,4 +87,9 @@ BitSet operator~(const BitSet& lhs) {
     lhs_tmp.Set(i, ~lhs.Get(i));
   }
   return lhs_tmp;
+}
+
+BitSet::BiA BitSet::operator[](const int32_t idx) {
+  BiA bia = BiA(*this, idx);
+  return bia;
 }
