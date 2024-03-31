@@ -35,13 +35,6 @@ bool BitSet::operator!=(const BitSet& rhs) const noexcept {
 int32_t BitSet::Size() const noexcept {
   return size_;
 }
-
-
-// testing git
-//sdfsfjlwjflw
-//fde
-// adf
-// ada
 void BitSet::Resize(const int32_t size) {
   if (size <= 0) {
     throw std::logic_error("try to resize with negative size");
