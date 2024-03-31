@@ -40,6 +40,7 @@ int32_t BitSet::Size() const noexcept {
 // testing git
 //sdfsfjlwjflw
 //fde
+// adf
 void BitSet::Resize(const int32_t size) {
   if (size <= 0) {
     throw std::logic_error("try to resize with negative size");
