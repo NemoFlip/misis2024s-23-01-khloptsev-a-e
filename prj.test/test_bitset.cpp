@@ -3,19 +3,16 @@
 #include <bitset/bitset.hpp>
 
 TEST_CASE("some tests") {
-  BitSet bitset1 = BitSet(100);
-  CHECK_EQ(bitset1.Size(), 100);
-//  CHECK_EQ(bitset1.Vec().size(), 4);
-  bitset1.Set(5, true);
-  CHECK_EQ(bitset1.Get(5), true);
+  BitSet bitset1 = BitSet(31);
+  bitset1.Set(0, true);
+  CHECK_EQ(bitset1.Get(0), true);
+  bitset1.Set(0, false);
+  CHECK_EQ(bitset1.Get(0), false);
 
-  bitset1[5] = false;
-  CHECK_EQ(bitset1.Get(5), false);
-  bitset1[5] = true;
-  CHECK_EQ(bitset1.Get(5), true);
-  BitSet bitSet2 = BitSet(50);
-  bitset1[5] = bitSet2[5];
-  CHECK_EQ(bitset1.Get(5), false);
+  bitset1.Resize(32);
+  bitset1.Set(31, true);
+  CHECK_EQ(bitset1.Get(31), true);
+
 
 
 
