@@ -5,14 +5,15 @@
 
 class DynArr {
 public:
-   [[nodiscard]] DynArr() = default;
-   [[nodiscard]] DynArr(const DynArr& dynarr);
+   DynArr(const DynArr& rhs);
+   DynArr() = default;
    DynArr(DynArr&& rhs) noexcept;
    [[nodiscard]] DynArr(const std::ptrdiff_t size);
    [[nodiscard]] DynArr& operator=(const DynArr& dynarr);
    DynArr& operator=(DynArr&& rhs) noexcept;
    ~DynArr() {
      delete[] data_;
+     data_ = nullptr;
    }
    void Resize(const std::ptrdiff_t size);
    [[nodiscard]] std::ptrdiff_t Size() const noexcept {

@@ -1,9 +1,9 @@
 #include <dynarr/dynarr.hpp>
 #include <stdexcept>
 
-DynArr::DynArr(const DynArr& dynarr): size_{dynarr.size_}, capacity_{dynarr.capacity_}, data_{new float[capacity_]} {
-  for (std::ptrdiff_t i = 0; i < dynarr.capacity_; i += 1) {
-    data_[i] = dynarr.data_[i];
+DynArr::DynArr(const DynArr& rhs): size_{rhs.size_}, capacity_{rhs.capacity_}, data_{new float[rhs.capacity_]} {
+  for (std::ptrdiff_t i = 0; i < rhs.capacity_; i += 1) {
+    data_[i] = rhs.data_[i];
   }
 }
 DynArr::DynArr(DynArr&& rhs) noexcept {
@@ -21,7 +21,7 @@ DynArr& DynArr::operator=(DynArr&& rhs) noexcept {
 }
 
 DynArr::DynArr(const std::ptrdiff_t size): size_{ size }, capacity_{ size } {
-  if (size < 0) {
+  if (size <= 0) {
     throw std::invalid_argument("Negative size of DynArr");
   }
   data_ = new float[capacity_];
@@ -65,7 +65,7 @@ DynArr& DynArr::operator=(const DynArr& dynarr) {
   return *this;
 }
 void DynArr::Resize(const std::ptrdiff_t size) {
-  if (size < 0) {
+  if (size <= 0) {
     throw std::invalid_argument("Trying to resize by negative size");
   }
   if (size > capacity_) {
