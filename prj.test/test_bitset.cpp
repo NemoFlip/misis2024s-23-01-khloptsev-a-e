@@ -13,6 +13,10 @@ TEST_CASE("some tests") {
   CHECK_EQ(bitset1.Get(5), false);
   bitset1[5] = true;
   CHECK_EQ(bitset1.Get(5), true);
+  BitSet bitSet2 = BitSet(50);
+  bitset1[5] = bitSet2[5];
+  CHECK_EQ(bitset1.Get(5), false);
+
 
 
 }

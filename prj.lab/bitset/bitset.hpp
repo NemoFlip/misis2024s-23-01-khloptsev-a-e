@@ -7,7 +7,16 @@ class BitSet {
 public:
     class BiA {
     public:
-        BiA& operator=(const BiA& rhs) = default;
+        BiA() = delete;
+        BiA(const BiA& rhs) = default;
+        ~BiA() = default;
+        BiA(BiA&& rhs) noexcept = default;
+        BiA& operator=(const BiA& rhs) {
+          idx_ = rhs.idx_;
+          bst_ = rhs.bst_;
+          return *this;
+        }
+
         BiA(BitSet& bst, const int32_t idx): bst_ { bst }, idx_ { idx } { }
         BiA& operator=(const bool val) {
           bst_.Set(idx_, val);
