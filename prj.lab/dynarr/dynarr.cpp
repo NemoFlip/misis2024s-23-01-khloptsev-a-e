@@ -22,7 +22,7 @@ DynArr& DynArr::operator=(DynArr&& rhs) noexcept {
 
 DynArr::DynArr(const std::ptrdiff_t size): size_{ size }, capacity_{ size } {
   if (size <= 0) {
-    throw std::invalid_argument("Negative size of DynArr");
+    throw std::invalid_argument("Not positive size of DynArr");
   }
   data_ = new float[capacity_];
   for (std::ptrdiff_t i = 0; i < capacity_; i += 1) {

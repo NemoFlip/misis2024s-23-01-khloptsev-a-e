@@ -91,13 +91,18 @@ BitSet::BiA BitSet::operator[](const int32_t idx) {
   BiA bia = BiA(*this, idx);
   return bia;
 }
+bool BitSet::operator[](const int32_t idx) const {
+  return Get(idx);
+}
 
 // Binary operations operators
 BitSet& BitSet::operator&=(const BitSet& rhs) {
-  if (size_ == rhs.size_) { // Что должно происходить при несовпадении размеров?
+  if (size_ == rhs.size_) {
     for (int i = 0; i < size_; i += 1) {
       Set(i, Get(i) & rhs.Get(i));
     }
+  } else {
+    throw std::logic_error("BitSet: sizes are not equal");
   }
   return *this;
 }
@@ -106,6 +111,8 @@ BitSet& BitSet::operator|=(const BitSet& rhs) {
     for (int i = 0; i < size_; i += 1) {
       Set(i, Get(i) | rhs.Get(i));
     }
+  } else {
+    throw std::logic_error("BitSet: sizes are not equal");
   }
   return *this;
 }
@@ -114,6 +121,8 @@ BitSet& BitSet::operator^=(const BitSet& rhs) {
     for (int i = 0; i < size_; i += 1) {
       Set(i, Get(i) ^ rhs.Get(i));
     }
+  } else {
+    throw std::logic_error("BitSet: sizes are not equal");
   }
   return *this;
 }

@@ -114,7 +114,7 @@ bool QueueArr::IsEmpty() const noexcept {
 QueueArr::~QueueArr() {
   delete[] data_;
 }
-void QueueArr::Clear() noexcept {
+void QueueArr::Clear() noexcept { // подразумеваем, что этот экземпляр мы еще будем использовать
   head_index = -1;
   tail_index = -1;
 }

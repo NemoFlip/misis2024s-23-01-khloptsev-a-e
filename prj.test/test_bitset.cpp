@@ -13,6 +13,9 @@ TEST_CASE("some tests") {
   bitset1.Set(31, true);
   CHECK_EQ(bitset1.Get(31), true);
 
+  BitSet bitset2 = BitSet(14);
+
+  CHECK_THROWS(bitset1 & bitset2);
 
 
 

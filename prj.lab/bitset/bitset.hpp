@@ -22,6 +22,10 @@ public:
           bst_.Set(idx_, val);
           return *this;
         }
+        operator bool() const {
+          return bst_.Get(idx_);
+
+        }
 
     private:
         int32_t idx_ = 0;
@@ -54,6 +58,7 @@ public:
 
 
     BiA operator[](const int32_t idx); // bst[5] = true;
+    bool operator[](const int32_t idx) const;
 private:
     std::vector<uint32_t> data_ { };
     std::int32_t size_ = 0;
