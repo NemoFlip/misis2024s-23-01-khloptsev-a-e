@@ -88,10 +88,16 @@ void BitSet::Fill(const bool val) noexcept {
   }
 }
 BitSet::BiA BitSet::operator[](const int32_t idx) {
+  if (idx >= size_ || idx < 0) {
+    throw std::logic_error("Trying to get element by invalid index.");
+  }
   BiA bia = BiA(*this, idx);
   return bia;
 }
 bool BitSet::operator[](const int32_t idx) const {
+  if (idx >= size_ || idx < 0) {
+    throw std::logic_error("Trying to get element by invalid index.");
+  }
   return Get(idx);
 }
 
