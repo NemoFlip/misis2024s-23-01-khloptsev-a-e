@@ -2,6 +2,7 @@
 #define BITSET_H
 #include <vector>
 #include <cstdint>
+#include <iosfwd>
 
 class BitSet {
 public:
@@ -11,12 +12,12 @@ public:
         BiA(const BiA& rhs) = default;
         ~BiA() = default;
         BiA(BiA&& rhs) noexcept = default;
+        BiA& operator=(BiA&& rhs) = delete;
         BiA& operator=(const BiA& rhs) {
           idx_ = rhs.idx_;
           bst_ = rhs.bst_;
           return *this;
         }
-
         BiA(BitSet& bst, const int32_t idx): bst_ { bst }, idx_ { idx } { }
         BiA& operator=(const bool val) {
           bst_.Set(idx_, val);
@@ -24,9 +25,7 @@ public:
         }
         operator bool() const {
           return bst_.Get(idx_);
-
         }
-
     private:
         int32_t idx_ = 0;
         BitSet& bst_;
@@ -59,10 +58,30 @@ public:
 
     BiA operator[](const int32_t idx); // bst[5] = true;
     bool operator[](const int32_t idx) const;
+
+    std::ostream& WriteBinary(std::ostream& ostrm) const noexcept;
+    std::istream& ReadBinary(std::istream& istrm) noexcept;
+
+
 private:
     std::vector<uint32_t> data_ { };
     std::int32_t size_ = 0;
+
+    bool GetBit(int32_t num, const int32_t idx) const {
+      num = num & (1 << (idx));
+      return num != 0;
+    }
+    void SetBit(int32_t& num, const int32_t idx, const bool val) {
+      if (val) {
+        num = num | (1 << idx);
+      } else {
+        num = num & (~(1 << idx));
+      }
+    }
 };
+std::ostream& operator<<(std::ostream& ostrm, const BitSet& bst);
+std::istream& operator>>(std::istream& istrm, BitSet& bst);
+
 BitSet operator&(const BitSet& lhs, const BitSet& rhs);
 BitSet operator|(const BitSet& lhs, const BitSet& rhs);
 BitSet operator^(const BitSet& lhs, const BitSet& rhs);

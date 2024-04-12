@@ -1,5 +1,6 @@
 #include <bitset/bitset.hpp>
 #include <stdexcept>
+#include <iostream>
 // ctors and operator=
 BitSet::BitSet(const std::int32_t size): data_(((size) / 32) + 1, 0), size_ { size } {
   if (size <= 0) {
@@ -147,6 +148,33 @@ BitSet BitSet::operator~() {
   }
   return *this;
 }
+std::ostream& BitSet::WriteBinary(std::ostream& ostrm) const noexcept {
+  ostrm << true; // старт
+  for (int i = 31; i >= 0; i -= 1) { // преобразуем сайз в битовую последовательность
+    int out_elem = GetBit(size_, i);
+    ostrm << out_elem;
+  }
+  int32_t count_of_one = 0;
+  for (int i = size_ - 1; i >= 0; i -= 1) { // преобразуем наши данные в битовую последовательность
+    bool out_elem = Get(i);
+    ostrm << out_elem;
+    count_of_one += out_elem == 1 ? 1 : 0;
+  }
+  for (int i = 31; i >= 0; i -= 1) { // преобразуем сайз в битовую последовательность
+    bool out_elem = GetBit(count_of_one, i);
+    ostrm << out_elem;
+  }
+  ostrm << false; // конец
+  return ostrm;
+}
+std::istream& BitSet::ReadBinary(std::istream& istrm) noexcept {
 
+}
 
+std::ostream& operator<<(std::ostream& ostrm, const BitSet& bst) {
+  return bst.WriteBinary(ostrm);
+}
 
+std::istream& operator>>(std::istream& istrm, BitSet& bst) {
+  return bst.ReadBinary(istrm);
+}

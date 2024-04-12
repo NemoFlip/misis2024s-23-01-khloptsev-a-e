@@ -16,7 +16,10 @@ TEST_CASE("some tests") {
   BitSet bitset2 = BitSet(14);
 
   CHECK_THROWS(bitset1 & bitset2);
-
+//  std::cout << bitset1;
+  std::cin >> bitset1;
+  CHECK_EQ(bitset1.Get(0), false);
+  CHECK_EQ(bitset1.Get(31), true);
 
 
 }
