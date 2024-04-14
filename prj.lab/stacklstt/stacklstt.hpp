@@ -98,25 +98,49 @@ StackLstT<T>::StackLstT(const StackLstT& rhs) {
       rhsTmp = rhsTmp->next;
       lhsTmp = lhsTmp->next;
     }
-  } // deleted: else { StackLstT(); }
+  }
 }
 
 template <class T>
 StackLstT<T>& StackLstT<T>::operator=(const StackLstT& rhs) {
   if (this != &rhs) {
-    if (!rhs.IsEmpty()) {
-      Node *rhsTmp = rhs.head_;
-      Node *lhsTmp = new Node;
-      lhsTmp->v = rhsTmp->v;
-      head_ = lhsTmp;
-      rhsTmp = rhsTmp->next;
-      while (rhsTmp != nullptr) {
-        lhsTmp->next = new Node;
-        lhsTmp->next->v = rhsTmp->v;
+    if (rhs.IsEmpty()) {
+      Clear();
+    } else {
+      Node* rhsTmp = rhs.head_;
+      Node* lhsTmp = head_;
+      if (IsEmpty()) {
+        head_ = new Node {rhs.Top()};
+        lhsTmp = head_;
         rhsTmp = rhsTmp->next;
-        lhsTmp = lhsTmp->next;
+        while (rhsTmp != nullptr) {
+          lhsTmp->next = new Node;
+          lhsTmp->next->v = rhsTmp->v;
+          rhsTmp = rhsTmp->next;
+          lhsTmp = lhsTmp->next;
+        }
+      } else {
+        head_->v = rhsTmp->v;
+        rhsTmp = rhsTmp->next;
+        while (rhsTmp != nullptr) {
+          if (lhsTmp->next == nullptr) {
+            lhsTmp->next = new Node;
+          }
+          lhsTmp->next->v = rhsTmp->v;
+          rhsTmp = rhsTmp->next;
+          lhsTmp = lhsTmp->next;
+        }
       }
-    } // deleted: else { StackLstT(); }
+      if (lhsTmp->next != nullptr) {
+        lhsTmp = lhsTmp->next;
+        Node* delTmp = nullptr;
+        while (lhsTmp != nullptr) {
+          delTmp = lhsTmp;
+          lhsTmp = lhsTmp->next;
+          delete delTmp;
+        }
+      }
+    }
   }
   return *this;
 }
