@@ -95,13 +95,13 @@ void QueueArr::Pop() noexcept {
     }
   }
 }
-const Complex& QueueArr::Top() const {
+const Complex& QueueArr::Top() const & {
   if (IsEmpty()) {
     throw std::logic_error("try to get top value from empty queue");
   }
   return data_[head_index];
 }
-Complex& QueueArr::Top() {
+Complex& QueueArr::Top() & {
   if (IsEmpty()) {
     throw std::logic_error("try to get top value from empty queue");
   }

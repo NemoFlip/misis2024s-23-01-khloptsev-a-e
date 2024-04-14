@@ -1,3 +1,4 @@
+#pragma once
 #ifndef QUEUEARR_H
 #define QUEUEARR_H
 #include <complex/complex.hpp>
@@ -13,8 +14,8 @@ public:
     void Push(const Complex& val);
     void Pop() noexcept;
     bool IsEmpty() const noexcept;
-    [[nodiscard]] const Complex& Top() const;
-    [[nodiscard]] Complex& Top();
+    [[nodiscard]] const Complex& Top() const &;
+    [[nodiscard]] Complex& Top() &;
     void Clear() noexcept;
 
 private:

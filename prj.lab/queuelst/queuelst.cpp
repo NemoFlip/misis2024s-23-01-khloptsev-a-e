@@ -35,14 +35,14 @@ void QueueLst::Pop() noexcept {
   }
 }
 
-Complex &QueueLst::Top() {
+Complex &QueueLst::Top() & {
   if (IsEmpty()) {
     throw std::logic_error("queuelst - try to get top value from empty queue");
   }
   return head_->v;
 }
 
-const Complex &QueueLst::Top() const {
+const Complex &QueueLst::Top() const & {
   if (IsEmpty()) {
     throw std::logic_error("queuelst - try to get top value from empty queue");
   }
@@ -51,21 +51,18 @@ const Complex &QueueLst::Top() const {
 
 QueueLst::QueueLst(const QueueLst &rhs) {
   if (!rhs.IsEmpty()) {
-    Node *lhsTmp = new Node;
-    Node *rhsTmp = rhs.head_;
+    Node* lhsTmp = new Node;
+    Node* rhsTmp = rhs.head_;
     head_ = lhsTmp;
     head_->v = rhsTmp->v;
-    tail_ = head_;
     rhsTmp = rhsTmp->next;
     while (rhsTmp != nullptr) {
       lhsTmp->next = new Node;
       lhsTmp = lhsTmp->next;
-      tail_ = lhsTmp;
       lhsTmp->v = rhsTmp->v;
       rhsTmp = rhsTmp->next;
     }
-  } else {
-    QueueLst();
+    tail_ = lhsTmp;
   }
 }
 
@@ -102,5 +99,17 @@ QueueLst& QueueLst::operator=(const QueueLst& rhs) {
     QueueLst();
   }
   return *this;
+}
+
+QueueLst& QueueLst::operator=(QueueLst&& rhs) noexcept {
+  if (this != &rhs) {
+    std::swap(head_, rhs.head_);
+    std::swap(tail_, rhs.head_);
+  }
+  return *this;
+}
+QueueLst::QueueLst(QueueLst&& rhs) noexcept {
+  std::swap(head_, rhs.head_);
+  std::swap(tail_, rhs.tail_);
 }
 
