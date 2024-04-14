@@ -1,3 +1,4 @@
+#pragma once
 #ifndef STACKLST_HPP
 #define STACKLST_HPP
 #include <complex/complex.hpp>
@@ -5,16 +6,16 @@
 
 class StackLst {
 public:
-    [[nodiscard]] StackLst() = default;
-    [[nodiscard]] StackLst(const StackLst& rhs);
+    StackLst() = default;
+    StackLst(const StackLst& rhs);
     StackLst(StackLst&& rhs) noexcept;
     StackLst& operator=(StackLst&& rhs) noexcept;
-    [[nodiscard]] StackLst& operator=(const StackLst& rhs);
-    bool IsEmpty() const noexcept;
+    StackLst& operator=(const StackLst& rhs);
+    [[nodiscard]] bool IsEmpty() const noexcept;
     void Push(const Complex& val);
     void Pop() noexcept;
-    [[nodiscard]] const Complex& Top() const;
-    [[nodiscard]] Complex& Top();
+    [[nodiscard]] const Complex& Top() const &;
+    [[nodiscard]] Complex& Top() &;
     void Clear() noexcept;
     ~StackLst();
 private:

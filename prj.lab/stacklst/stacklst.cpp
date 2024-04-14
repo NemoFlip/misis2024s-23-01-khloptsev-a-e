@@ -1,27 +1,19 @@
 #include <stacklst/stacklst.hpp>
 #include <stdexcept>
 bool StackLst::IsEmpty() const noexcept {
-  return (head_ == nullptr);
+  return head_ == nullptr;
 }
 void StackLst::Push(const Complex& val) {
-  if (!IsEmpty()) {
-    Node* temp = new Node;
-    temp->v = val;
-    temp->next = head_;
-    head_ = temp;
-  } else {
-    head_ = new Node;
-    head_->v = val;
-  }
+  head_ = new Node{val, head_};
 }
-const Complex& StackLst::Top() const {
-  if (this->IsEmpty()) {
+const Complex& StackLst::Top() const & {
+  if (IsEmpty()) {
     throw std::logic_error("StackLst - try to get top from empty stack.");
   }
   return head_->v;
 }
-Complex& StackLst::Top() {
-  if (this->IsEmpty()) {
+Complex& StackLst::Top() & {
+  if (IsEmpty()) {
     throw std::logic_error("StackLst - try to get top from empty stack.");
   }
   return head_->v;
@@ -40,7 +32,7 @@ StackLst::~StackLst() {
 
 
 void StackLst::Pop() noexcept {
-  if (!(this->IsEmpty())) {
+  if (!IsEmpty()) {
     Node* temp = head_;
     head_ = head_->next;
     delete temp;
@@ -49,8 +41,7 @@ void StackLst::Pop() noexcept {
 StackLst::StackLst(const StackLst& rhs) {
   if (!rhs.IsEmpty()) {
     Node* rhsTmp = rhs.head_;
-    Node* lhsTmp = new Node;
-    lhsTmp->v = rhsTmp->v;
+    Node* lhsTmp = new Node {rhs.Top()};
     head_ = lhsTmp;
     rhsTmp = rhsTmp->next;
     while (rhsTmp != nullptr) {
@@ -59,7 +50,7 @@ StackLst::StackLst(const StackLst& rhs) {
       rhsTmp = rhsTmp->next;
       lhsTmp = lhsTmp->next;
     }
-  } // deleted: else { StackLst(); }
+  }
 }
 StackLst& StackLst::operator=(const StackLst& rhs) {
   if (this != &rhs) {
