@@ -81,3 +81,32 @@ TEST_CASE("Clear method test") {
   CHECK(stack1.IsEmpty());
   CHECK_THROWS(stack1.Top());
 }
+
+TEST_CASE("operator=: lhs has elements") {
+  StackLst stack1 { };
+  Complex compl1{1.1, 2.3};
+  Complex compl2{1.2, 2.3};
+  Complex compl3{1.3, 2.3};
+  stack1.Push(compl1);
+  stack1.Push(compl2);
+  stack1.Push(compl3);
+  StackLst stack2 { };
+  Complex compl4{1.4, 2.3};
+  Complex compl5{1.5, 2.3};
+  Complex compl6{1.6, 2.3};
+  stack2.Push(compl4);
+  stack2.Push(compl5);
+  stack2.Push(compl6);
+  // Check when lhs and rhs has 3 elements
+  stack1 = stack2;
+  CHECK_EQ(stack1.Top(), compl6);
+  // Check when lhs has 3 elements, rhs has 4 elements
+  Complex compl7 {1.5, 2.3};
+  stack2.Push(compl7);
+  stack1 = stack2;
+  CHECK_EQ(stack1.Top(), compl7);
+  // Check when lhs has 0 elements, rhs has 4 elements
+  stack1.Clear();
+  stack1 = stack2;
+  CHECK_EQ(stack1.Top(), compl7);
+}

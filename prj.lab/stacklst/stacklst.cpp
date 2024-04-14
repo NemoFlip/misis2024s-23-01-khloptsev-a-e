@@ -19,11 +19,8 @@ Complex& StackLst::Top() & {
   return head_->v;
 }
 void StackLst::Clear() noexcept {
-    Node* tmp = head_;
-    while (tmp != nullptr) {
-      head_ = head_->next;
-      delete tmp;
-      tmp = head_;
+  while (!IsEmpty()) {
+    Pop();
   }
 }
 StackLst::~StackLst() {
@@ -54,19 +51,43 @@ StackLst::StackLst(const StackLst& rhs) {
 }
 StackLst& StackLst::operator=(const StackLst& rhs) {
   if (this != &rhs) {
-    if (!rhs.IsEmpty()) {
-      Node *rhsTmp = rhs.head_;
-      Node *lhsTmp = new Node;
-      lhsTmp->v = rhsTmp->v;
-      head_ = lhsTmp;
-      rhsTmp = rhsTmp->next;
-      while (rhsTmp != nullptr) {
-        lhsTmp->next = new Node;
-        lhsTmp->next->v = rhsTmp->v;
+    if (rhs.IsEmpty()) {
+      Clear();
+    } else {
+      Node* rhsTmp = rhs.head_;
+      Node* lhsTmp = head_;
+      if (IsEmpty()) {
+        head_ = new Node {rhs.Top()};
+        lhsTmp = head_;
         rhsTmp = rhsTmp->next;
-        lhsTmp = lhsTmp->next;
+        while (rhsTmp != nullptr) {
+          lhsTmp->next = new Node;
+          lhsTmp->next->v = rhsTmp->v;
+          rhsTmp = rhsTmp->next;
+          lhsTmp = lhsTmp->next;
+        }
+      } else {
+        head_->v = rhsTmp->v;
+        rhsTmp = rhsTmp->next;
+        while (rhsTmp != nullptr) {
+          if (lhsTmp->next == nullptr) {
+            lhsTmp->next = new Node;
+          }
+          lhsTmp->next->v = rhsTmp->v;
+          rhsTmp = rhsTmp->next;
+          lhsTmp = lhsTmp->next;
+        }
       }
-    } // deleted: else { StackLst(); }
+      if (lhsTmp->next != nullptr) {
+        lhsTmp = lhsTmp->next;
+        Node* delTmp = nullptr;
+        while (lhsTmp != nullptr) {
+          delTmp = lhsTmp;
+          lhsTmp = lhsTmp->next;
+          delete delTmp;
+        }
+      }
+    }
   }
   return *this;
 }
