@@ -95,8 +95,6 @@ QueueLst& QueueLst::operator=(const QueueLst& rhs) {
       lhsTmp->v = rhsTmp->v;
       rhsTmp = rhsTmp->next;
     }
-  } else {
-    QueueLst();
   }
   return *this;
 }
