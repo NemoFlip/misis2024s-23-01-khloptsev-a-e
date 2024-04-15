@@ -9,7 +9,7 @@ void StackLst::Push(const Complex &val) {
   head_ = new Node{val, head_};
 }
 
-const Complex &StackLst::Top() const &{
+const Complex &StackLst::Top() const & {
   if (IsEmpty()) {
     throw std::logic_error("StackLst - try to get top from empty stack.");
   }
