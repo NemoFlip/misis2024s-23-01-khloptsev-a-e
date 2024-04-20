@@ -79,14 +79,15 @@ StackLst &StackLst::operator=(const StackLst &rhs) {
         rhsTmp = rhsTmp->next;
         lhsTmp = lhsTmp->next;
       }
-
-      if (lhsTmp->next != nullptr) {
-        lhsTmp = lhsTmp->next;
-        Node *delTmp = nullptr;
-        while (lhsTmp != nullptr) {
-          delTmp = lhsTmp;
-          lhsTmp = lhsTmp->next;
-          delete delTmp;
+      if (lhsTmp->next) {
+        Node* tmp = lhsTmp->next->next; // второй после текущего элемент
+        delete lhsTmp->next;
+        lhsTmp->next = nullptr;
+        lhsTmp = tmp; // переходим в элемент через один от текущего
+        while (lhsTmp) {
+          tmp = lhsTmp->next;
+          delete lhsTmp;
+          lhsTmp = tmp;
         }
       }
     }
