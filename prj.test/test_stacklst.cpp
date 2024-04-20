@@ -90,6 +90,7 @@ TEST_CASE("operator=: lhs has elements") {
   stack1.Push(compl1);
   stack1.Push(compl2);
   stack1.Push(compl3);
+
   StackLst stack2 { };
   Complex compl4{1.4, 2.3};
   Complex compl5{1.5, 2.3};
@@ -97,6 +98,7 @@ TEST_CASE("operator=: lhs has elements") {
   stack2.Push(compl4);
   stack2.Push(compl5);
   stack2.Push(compl6);
+
   // Check when lhs and rhs has 3 elements
   stack1 = stack2;
   CHECK_EQ(stack1.Top(), compl6);
@@ -109,4 +111,14 @@ TEST_CASE("operator=: lhs has elements") {
   stack1.Clear();
   stack1 = stack2;
   CHECK_EQ(stack1.Top(), compl7);
+  // Check when lhs has 4 elements, rhs has 3 elements
+  stack2.Pop();
+  stack1 = stack2;
+  CHECK_EQ(stack1.Top(), compl6);
+  stack1.Pop();
+  CHECK_EQ(stack1.Top(), compl5);
+  stack1.Pop();
+  CHECK_EQ(stack1.Top(), compl4);
+  stack1.Pop();
+  CHECK(stack1.IsEmpty());
 }
