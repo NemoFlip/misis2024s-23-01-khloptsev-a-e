@@ -1,5 +1,6 @@
 #include <stacklst/stacklst.hpp>
 #include <stdexcept>
+#include <memory>
 
 bool StackLst::IsEmpty() const noexcept {
   return head_ == nullptr;
@@ -16,7 +17,7 @@ const Complex &StackLst::Top() const & {
   return head_->v;
 }
 
-Complex &StackLst::Top() &{
+Complex &StackLst::Top() & {
   if (IsEmpty()) {
     throw std::logic_error("StackLst - try to get top from empty stack.");
   }
@@ -98,9 +99,7 @@ StackLst::StackLst(StackLst &&rhs) noexcept {
 }
 
 StackLst &StackLst::operator=(StackLst &&rhs) noexcept {
-  if (this != &rhs) {
-    std::swap(head_, rhs.head_);
-  }
+  std::swap(head_, rhs.head_);
   return *this;
 }
 
