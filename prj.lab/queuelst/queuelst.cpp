@@ -81,19 +81,37 @@ QueueLst::~QueueLst() {
 }
 
 QueueLst& QueueLst::operator=(const QueueLst& rhs) {
-  if (!rhs.IsEmpty()) {
-    Node *lhsTmp = new Node;
-    Node *rhsTmp = rhs.head_;
-    head_ = lhsTmp;
-    head_->v = rhsTmp->v;
-    tail_ = head_;
-    rhsTmp = rhsTmp->next;
-    while (rhsTmp != nullptr) {
-      lhsTmp->next = new Node;
-      lhsTmp = lhsTmp->next;
-      tail_ = lhsTmp;
-      lhsTmp->v = rhsTmp->v;
+  if (this != &rhs) {
+    if (rhs.IsEmpty()) {
+      Clear();
+    } else {
+      Node *rhsTmp = rhs.head_;
+      if (IsEmpty()) {
+        head_ = new Node{rhs.Top()};
+      } else {
+        head_->v = rhsTmp->v;
+      }
+      Node* lhsTmp = head_;
       rhsTmp = rhsTmp->next;
+      while (rhsTmp != nullptr) {
+        if (lhsTmp->next == nullptr) {
+          lhsTmp->next = new Node;
+        }
+        lhsTmp->next->v = rhsTmp->v;
+        rhsTmp = rhsTmp->next;
+        lhsTmp = lhsTmp->next;
+      }
+      if (lhsTmp->next) {
+        Node* tmp = lhsTmp->next->next; // второй после текущего элемент
+        delete lhsTmp->next;
+        lhsTmp->next = nullptr;
+        lhsTmp = tmp; // переходим в элемент через один от текущего
+        while (lhsTmp) {
+          tmp = lhsTmp->next;
+          delete lhsTmp;
+          lhsTmp = tmp;
+        }
+      }
     }
   }
   return *this;

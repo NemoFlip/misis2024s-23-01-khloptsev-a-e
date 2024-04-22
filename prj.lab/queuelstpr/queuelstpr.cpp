@@ -18,16 +18,38 @@ QueueLstPr::QueueLstPr(QueueLstPr&& rhs) noexcept {
   std::swap(tail_, rhs.tail_);
 }
 QueueLstPr& QueueLstPr::operator=(const QueueLstPr& rhs) {
-  if (!rhs.IsEmpty()) {
-    Node* rhs_tmp = rhs.head_;
-    Push(rhs_tmp->v);
-    rhs_tmp = rhs_tmp->next;
-    while (rhs_tmp != nullptr) {
-      Push(rhs_tmp->v);
-      rhs_tmp = rhs_tmp->next;
+  if (this != &rhs) {
+    if (rhs.IsEmpty()) {
+      Clear();
+    } else {
+      Node *rhsTmp = rhs.head_;
+      if (IsEmpty()) {
+        head_ = new Node{rhs.Top()};
+      } else {
+        head_->v = rhsTmp->v;
+      }
+      Node* lhsTmp = head_;
+      rhsTmp = rhsTmp->next;
+      while (rhsTmp != nullptr) {
+        if (lhsTmp->next == nullptr) {
+          lhsTmp->next = new Node;
+        }
+        lhsTmp->next->v = rhsTmp->v;
+        rhsTmp = rhsTmp->next;
+        lhsTmp = lhsTmp->next;
+      }
+      if (lhsTmp->next) {
+        Node* tmp = lhsTmp->next->next; // второй после текущего элемент
+        delete lhsTmp->next;
+        lhsTmp->next = nullptr;
+        lhsTmp = tmp; // переходим в элемент через один от текущего
+        while (lhsTmp) {
+          tmp = lhsTmp->next;
+          delete lhsTmp;
+          lhsTmp = tmp;
+        }
+      }
     }
-  } else {
-    QueueLstPr();
   }
   return *this;
 }
@@ -86,14 +108,14 @@ void QueueLstPr::Push(float val) {
 
 }
 
-float& QueueLstPr::Top() {
+float& QueueLstPr::Top() & {
   if (IsEmpty()) {
     throw std::logic_error("queuelstpr error - try to get top element from emptry queue");
   }
   return head_->v;
 }
 
-const float& QueueLstPr::Top() const {
+const float& QueueLstPr::Top() const & {
   if (IsEmpty()) {
     throw std::logic_error("queuelstpr error - try to get top element from emptry queue");
   }

@@ -11,8 +11,8 @@ public:
     bool IsEmpty() const noexcept;
     void Push(float val);
     void Pop() noexcept;
-    const float& Top() const;
-    float& Top(); // TODO: пометить все методы, которые возвращают ссылку как '&' - то есть только для lvalue(чтобы нельзя было создать висячую ссылку на поле временного объекта)
+    const float& Top() const &;
+    float& Top() &;
     void Clear() noexcept;
     ~QueueLstPr();
 private:

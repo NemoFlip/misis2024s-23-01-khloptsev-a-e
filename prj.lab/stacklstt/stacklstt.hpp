@@ -31,7 +31,6 @@ bool StackLstT<T>::IsEmpty() const noexcept {
 }
 
 template <class T>
-
 void StackLstT<T>::Push(const T& val) {
   if (!IsEmpty()) {
     Node* temp = new Node;
@@ -77,7 +76,7 @@ StackLstT<T>::~StackLstT() {
 
 template <class T>
 void StackLstT<T>::Pop() noexcept {
-  if (!(this->IsEmpty())) {
+  if (!IsEmpty()) {
     Node* temp = head_;
     head_ = head_->next;
     delete temp;
@@ -85,7 +84,7 @@ void StackLstT<T>::Pop() noexcept {
 }
 
 template <class T>
-StackLstT<T>::StackLstT(const StackLstT& rhs) {
+StackLstT<T>::StackLstT(const StackLstT<T>& rhs) {
   if (!rhs.IsEmpty()) {
     Node* rhsTmp = rhs.head_;
     Node* lhsTmp = new Node;
@@ -102,42 +101,36 @@ StackLstT<T>::StackLstT(const StackLstT& rhs) {
 }
 
 template <class T>
-StackLstT<T>& StackLstT<T>::operator=(const StackLstT& rhs) {
+StackLstT<T>& StackLstT<T>::operator=(const StackLstT<T>& rhs) {
   if (this != &rhs) {
     if (rhs.IsEmpty()) {
       Clear();
     } else {
-      Node* rhsTmp = rhs.head_;
-      Node* lhsTmp = head_;
+      Node *rhsTmp = rhs.head_;
       if (IsEmpty()) {
-        head_ = new Node {rhs.Top()};
-        lhsTmp = head_;
-        rhsTmp = rhsTmp->next;
-        while (rhsTmp != nullptr) {
-          lhsTmp->next = new Node;
-          lhsTmp->next->v = rhsTmp->v;
-          rhsTmp = rhsTmp->next;
-          lhsTmp = lhsTmp->next;
-        }
+        head_ = new Node{rhs.Top()};
       } else {
         head_->v = rhsTmp->v;
-        rhsTmp = rhsTmp->next;
-        while (rhsTmp != nullptr) {
-          if (lhsTmp->next == nullptr) {
-            lhsTmp->next = new Node;
-          }
-          lhsTmp->next->v = rhsTmp->v;
-          rhsTmp = rhsTmp->next;
-          lhsTmp = lhsTmp->next;
-        }
       }
-      if (lhsTmp->next != nullptr) {
+      Node* lhsTmp = head_;
+      rhsTmp = rhsTmp->next;
+      while (rhsTmp != nullptr) {
+        if (lhsTmp->next == nullptr) {
+          lhsTmp->next = new Node;
+        }
+        lhsTmp->next->v = rhsTmp->v;
+        rhsTmp = rhsTmp->next;
         lhsTmp = lhsTmp->next;
-        Node* delTmp = nullptr;
-        while (lhsTmp != nullptr) {
-          delTmp = lhsTmp;
-          lhsTmp = lhsTmp->next;
-          delete delTmp;
+      }
+      if (lhsTmp->next) {
+        Node* tmp = lhsTmp->next->next; // второй после текущего элемент
+        delete lhsTmp->next;
+        lhsTmp->next = nullptr;
+        lhsTmp = tmp; // переходим в элемент через один от текущего
+        while (lhsTmp) {
+          tmp = lhsTmp->next;
+          delete lhsTmp;
+          lhsTmp = tmp;
         }
       }
     }
@@ -146,12 +139,12 @@ StackLstT<T>& StackLstT<T>::operator=(const StackLstT& rhs) {
 }
 
 template <class T>
-StackLstT<T>::StackLstT(StackLstT&& rhs) noexcept {
+StackLstT<T>::StackLstT(StackLstT<T>&& rhs) noexcept {
   std::swap(head_, rhs.head_);
 }
 
 template <class T>
-StackLstT<T>& StackLstT<T>::operator=(StackLstT&& rhs) noexcept {
+StackLstT<T>& StackLstT<T>::operator=(StackLstT<T>&& rhs) noexcept {
   if (this != &rhs) {
     std::swap(head_, rhs.head_);
   }
