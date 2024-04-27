@@ -13,7 +13,7 @@ public:
     ~QueueArr();
     void Push(const Complex& val);
     void Pop() noexcept;
-    bool IsEmpty() const noexcept;
+    [[nodiscard]] bool IsEmpty() const noexcept;
     [[nodiscard]] const Complex& Top() const &;
     [[nodiscard]] Complex& Top() &;
     void Clear() noexcept;

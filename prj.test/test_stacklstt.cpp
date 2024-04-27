@@ -26,8 +26,8 @@ void make_vector(std::vector<std::string>& vec) {
 }
 
 
-TEST_CASE_TEMPLATE("StackLstt methods tests", T, int, double, std::string, Complex) {
-  std::vector<T> vec1;
+TEST_CASE_TEMPLATE("StackLstt push/pop methods tests", T, int, double, std::string, Complex) {
+  std::vector<T> vec1 { };
   make_vector(vec1);
 
   StackLstT<T> stack1;
@@ -41,4 +41,29 @@ TEST_CASE_TEMPLATE("StackLstt methods tests", T, int, double, std::string, Compl
     --index;
   }
   CHECK(stack1.IsEmpty());
+}
+
+TEST_CASE_TEMPLATE("Stacklstt operator= tests", T, int, double, std::string, Complex) {
+  std::vector<T> vec1 { };
+  make_vector(vec1);
+  StackLstT<T> stack1;
+  for (T& value : vec1) {
+    stack1.Push(value);
+  }
+  StackLstT<T> stack2 { };
+  for (T& value : vec1) {
+    stack2.Push(value);
+  }
+  stack2.Pop();
+  stack1 = stack2;
+  CHECK_EQ(stack1.Top(), stack2.Top());
+  while (!stack1.IsEmpty() && !stack2.IsEmpty()) {
+    stack1.Pop();
+    stack2.Pop();
+    if (!stack1.IsEmpty() && !stack2.IsEmpty()) {
+      CHECK_EQ(stack1.Top(), stack2.Top());
+    }
+  }
+  CHECK(stack1.IsEmpty());
+  CHECK(stack2.IsEmpty());
 }

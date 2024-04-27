@@ -9,7 +9,7 @@ public:
     [[nodiscard]] StackLstT(const StackLstT& rhs);
     StackLstT(StackLstT&& rhs) noexcept;
     StackLstT& operator=(StackLstT&& rhs) noexcept;
-    [[nodiscard]] StackLstT& operator=(const StackLstT& rhs);
+    StackLstT& operator=(const StackLstT& rhs);
     bool IsEmpty() const noexcept;
     void Push(const T& val);
     void Pop() noexcept;
