@@ -1,1 +1,1 @@
-    11>D:\projects\misis2023f-23-check\misis2024s-23-01-khloptsev-a-e\prj.lab\bitset\bitset.cpp(172): error C4716: 'BitSet::ReadBinary': must return a value [D:\projects\misis2023f-23-check\misis2024s-23-01-khloptsev-a-e\build.check\prj.lab\bitset\bitset.vcxproj]
+     9>D:\projects\misis2023f-23-check\misis2024s-23-01-khloptsev-a-e\prj.lab\bitset\bitset.cpp(172,1): error C4716: BitSet::ReadBinary: должна возвращать значение [D:\projects\misis2023f-23-check\misis2024s-23-01-khloptsev-a-e\build.check\prj.lab\bitset\bitset.vcxproj]
