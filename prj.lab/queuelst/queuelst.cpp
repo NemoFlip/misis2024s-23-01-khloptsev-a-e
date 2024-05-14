@@ -35,14 +35,14 @@ void QueueLst::Pop() noexcept {
   }
 }
 
-Complex &QueueLst::Top() & {
+Complex& QueueLst::Top() & {
   if (IsEmpty()) {
     throw std::logic_error("queuelst - try to get top value from empty queue");
   }
   return head_->v;
 }
 
-const Complex &QueueLst::Top() const & {
+const Complex& QueueLst::Top() const & {
   if (IsEmpty()) {
     throw std::logic_error("queuelst - try to get top value from empty queue");
   }
