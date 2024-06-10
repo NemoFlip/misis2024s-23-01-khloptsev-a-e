@@ -9,10 +9,10 @@ public:
     class BiA {
     public:
         BiA() = delete;
-        BiA(const BiA& rhs) = default;
+        BiA(const BiA& rhs) = delete;
         ~BiA() = default;
         BiA(BiA&& rhs) noexcept = default;
-        BiA& operator=(BiA&& rhs) = delete;
+        BiA& operator=(BiA&& rhs) noexcept { return *this; }
         BiA& operator=(const BiA& rhs) {
           idx_ = rhs.idx_;
           bst_ = rhs.bst_;
@@ -32,7 +32,7 @@ public:
     };
 public:
     BitSet() = default;
-    explicit BitSet(const std::int32_t size);
+    BitSet(const std::int32_t size);
     BitSet(const BitSet& rhs) = default;
     BitSet(BitSet&& rhs) noexcept;
     BitSet& operator=(const BitSet& rhs) = default;
@@ -66,18 +66,6 @@ public:
 private:
     std::vector<uint32_t> data_ { };
     std::int32_t size_ = 0;
-
-    bool GetBit(int32_t num, const int32_t idx) const {
-      num = num & (1 << (idx));
-      return num != 0;
-    }
-    void SetBit(int32_t& num, const int32_t idx, const bool val) {
-      if (val) {
-        num = num | (1 << idx);
-      } else {
-        num = num & (~(1 << idx));
-      }
-    }
 };
 std::ostream& operator<<(std::ostream& ostrm, const BitSet& bst);
 std::istream& operator>>(std::istream& istrm, BitSet& bst);
