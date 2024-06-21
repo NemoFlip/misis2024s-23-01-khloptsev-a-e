@@ -23,7 +23,7 @@ public:
           bst_.Set(idx_, val);
           return *this;
         }
-        operator bool() const {
+        operator bool() const noexcept {
           return bst_.Get(idx_);
         }
     private:
